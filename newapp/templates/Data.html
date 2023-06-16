@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .pagination {
+          margin-top: 20px;
+      }
+  
+      .pagination-list {
+          list-style: none;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+      }
+  
+      .pagination-list li {
+          display: inline-block;
+          margin-right: 5px;
+      }
+  
+      .pagination-list li a {
+          display: inline-block;
+          padding: 5px 10px;
+          text-decoration: none;
+          color: #333;
+          background-color: #f2f2f2;
+          border: 1px solid #ccc;
+      }
+  
+      .pagination-list li.active a {
+          background-color: #333;
+          color: #fff;
+      }
+  
+      table {
+          width: 100%;
+          border-collapse: collapse;
+      }
+  
+      th, td {
+          padding: 8px;
+          text-align: left;
+          border-bottom: 1px solid #ddd;
+      }
+  
+      th {
+          background-color: #f2f2f2;
+      }
+  </style>
+  
+
+  </head>
+<body>
+    <table>
+        <tr>
+            <th>First_name</th>
+            <th>Last_Name</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+        {%for item in page_obj%}
+        <tr>
+            <td>{{item.first_name}}</td>
+            <td>{{item.last_name}}</td>
+            <td>{{item.username}}</td>
+            <td>{{item.email}}</td>
+            <td>{{item.Roles}}</td>
+        </tr>
+        {%endfor%}
+    </table>
+
+    <!-- Generate pagination links -->
+    <div class="pagination">
+        <ul class="pagination-list">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}">Previous</a></li>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+            <li{% if page_obj.number == num %} class="active"{% endif %}><a href="?page={{ num }}">{{ num }}</a></li>
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</body>
+</html>
